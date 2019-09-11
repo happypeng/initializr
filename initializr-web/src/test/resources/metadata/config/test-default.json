@@ -10,18 +10,18 @@
     "content": [
       {
         "default": false,
-        "id": "1.2.0.BUILD-SNAPSHOT",
+        "id": "2.2.0.BUILD-SNAPSHOT",
         "name": "Latest SNAPSHOT"
       },
       {
         "default": true,
-        "id": "1.1.4.RELEASE",
-        "name": "1.1.4"
+        "id": "2.1.4.RELEASE",
+        "name": "2.1.4"
       },
       {
         "default": false,
-        "id": "1.0.2.RELEASE",
-        "name": "1.0.2"
+        "id": "1.5.17.RELEASE",
+        "name": "1.5.17"
       }
     ],
     "description": "spring boot version",
@@ -32,7 +32,7 @@
   "configuration": {"env": {
     "artifactRepository": "https://repo.spring.io/release/",
     "fallbackApplicationName": "Application",
-    "forceSsl": true,
+    "forceSsl": false,
     "gradle": {
       "dependencyManagementPluginVersion": "1.0.0.RELEASE"
     },
@@ -40,11 +40,11 @@
       "defaultVersion": "1.2",
       "mappings": [
         {
-          "versionRange": "[1.0.0.RELEASE,1.2.0.RELEASE)",
+          "compatibilityRange": "[1.5.0.RELEASE,2.0.0.M1)",
           "version": "1.0"
         },
         {
-          "versionRange": "[1.2.0.RELEASE,1.5.0.RELEASE)",
+          "compatibilityRange": "[2.0.0.M1,2.1.0.M1)",
           "version": "1.1"
         }
       ]
@@ -68,17 +68,17 @@
     "repositories": {
       "my-api-repo-1": {
         "name": "repo1",
-        "url": "http://example.com/repo1",
+        "url": "https://example.com/repo1",
         "snapshotsEnabled": false
       },
       "my-api-repo-2": {
         "name": "repo2",
-        "url": "http://example.com/repo2",
+        "url": "https://example.com/repo2",
         "snapshotsEnabled": false
       },
       "my-api-repo-3": {
         "name": "repo3",
-        "url": "http://example.com/repo3",
+        "url": "https://example.com/repo3",
         "snapshotsEnabled": false
       },
       "spring-milestones": {
@@ -102,19 +102,17 @@
         ],
         "mappings": [
           {
-            "versionRange": "[1.0.0.RELEASE,1.1.6.RELEASE)",
+            "compatibilityRange": "[2.0.0.RELEASE,2.1.6.RELEASE)",
             "repositories": [
               "my-api-repo-1"
             ],
-            "additionalBoms": [],
             "version": "1.0.0.RELEASE"
           },
           {
-            "versionRange": "1.2.1.RELEASE",
+            "compatibilityRange": "2.2.1.RELEASE",
             "repositories": [
               "my-api-repo-2"
             ],
-            "additionalBoms": [],
             "version": "2.0.0.RELEASE"
           }
         ]
@@ -221,7 +219,7 @@
             "name": "Biz",
             "scope": "runtime",
             "version": "1.3.5",
-            "versionRange": "1.2.0.BUILD-SNAPSHOT"
+            "compatibilityRange": "2.2.0.BUILD-SNAPSHOT"
           },
           {
             "starter": true,
@@ -231,7 +229,7 @@
             "name": "Bur",
             "scope": "test",
             "version": "2.1.0",
-            "versionRange": "[1.1.4.RELEASE,1.2.0.BUILD-SNAPSHOT)"
+            "compatibilityRange": "[2.1.4.RELEASE,2.2.0.BUILD-SNAPSHOT)"
           },
           {
             "starter": true,
@@ -351,7 +349,6 @@
         "description": null,
         "id": "maven-build",
         "name": "Maven POM",
-        "stsId": "pom.xml",
         "tags": {
           "build": "maven",
           "format": "build"
@@ -363,7 +360,6 @@
         "description": null,
         "id": "maven-project",
         "name": "Maven Project",
-        "stsId": "starter.zip",
         "tags": {
           "build": "maven",
           "format": "project"
@@ -375,7 +371,6 @@
         "description": null,
         "id": "gradle-build",
         "name": "Gradle Config",
-        "stsId": "build.gradle",
         "tags": {
           "build": "gradle",
           "format": "build"
@@ -387,7 +382,6 @@
         "description": null,
         "id": "gradle-project",
         "name": "Gradle Project",
-        "stsId": "gradle.zip",
         "tags": {
           "build": "gradle",
           "format": "project"

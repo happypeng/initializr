@@ -1,11 +1,11 @@
 /*
- * Copyright 2012-2018 the original author or authors.
+ * Copyright 2012-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -35,11 +35,11 @@ import org.springframework.test.context.TestExecutionListeners.MergeMode;
  * @author Stephane Nicoll
  */
 @ContextConfiguration(classes = RestTemplateConfig.class)
-@TestExecutionListeners(mergeMode = MergeMode.MERGE_WITH_DEFAULTS, listeners = MockMvcClientHttpRequestFactoryTestExecutionListener.class)
+@TestExecutionListeners(mergeMode = MergeMode.MERGE_WITH_DEFAULTS,
+		listeners = MockMvcClientHttpRequestFactoryTestExecutionListener.class)
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs(outputDir = "target/snippets", uriPort = 80, uriHost = "start.spring.io")
-public abstract class AbstractInitializrControllerIntegrationTests
-		extends AbstractInitializrIntegrationTests {
+public abstract class AbstractInitializrControllerIntegrationTests extends AbstractInitializrIntegrationTests {
 
 	protected String host = "start.spring.io";
 
@@ -60,8 +60,7 @@ public abstract class AbstractInitializrControllerIntegrationTests
 
 		@Bean
 		RestTemplateCustomizer mockMvcCustomizer(BeanFactory beanFactory) {
-			return (template) -> template.setRequestFactory(
-					beanFactory.getBean(MockMvcClientHttpRequestFactory.class));
+			return (template) -> template.setRequestFactory(beanFactory.getBean(MockMvcClientHttpRequestFactory.class));
 		}
 
 	}

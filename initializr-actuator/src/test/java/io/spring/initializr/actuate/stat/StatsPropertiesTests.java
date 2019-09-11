@@ -1,11 +1,11 @@
 /*
- * Copyright 2012-2018 the original author or authors.
+ * Copyright 2012-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,30 +16,23 @@
 
 package io.spring.initializr.actuate.stat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
+ * Tests for {@link StatsProperties}.
+ *
  * @author Stephane Nicoll
  */
-public class StatsPropertiesTests {
+class StatsPropertiesTests {
 
 	private final StatsProperties properties = new StatsProperties();
 
 	@Test
-	public void cleanTrailingSlash() {
-		this.properties.getElastic().setUri("http://example.com/");
-		assertThat(this.properties.getElastic().getUri()).isEqualTo("http://example.com");
-	}
-
-	@Test
-	public void provideEntityUrl() {
-		this.properties.getElastic().setUri("http://example.com/");
-		this.properties.getElastic().setIndexName("my-index");
-		this.properties.getElastic().setEntityName("foo");
-		assertThat(this.properties.getElastic().getEntityUrl().toString())
-				.isEqualTo("http://example.com/my-index/foo");
+	void cleanTrailingSlash() {
+		this.properties.getElastic().setUri("https://example.com/");
+		assertThat(this.properties.getElastic().getUri()).isEqualTo("https://example.com");
 	}
 
 }

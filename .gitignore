@@ -1,4 +1,5 @@
 !.mvn/wrapper/maven-wrapper.jar
+.flattened-pom.xml
 .gradle
 *.sw?
 .#*
@@ -12,7 +13,6 @@
 .factorypath
 *.iml
 bin
-build
 target
 .springBeans
 .vscode/

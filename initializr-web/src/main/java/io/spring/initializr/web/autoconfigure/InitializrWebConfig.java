@@ -1,11 +1,11 @@
 /*
- * Copyright 2012-2018 the original author or authors.
+ * Copyright 2012-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,8 +21,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import io.spring.initializr.util.Agent;
-import io.spring.initializr.util.Agent.AgentId;
+import io.spring.initializr.web.support.Agent;
+import io.spring.initializr.web.support.Agent.AgentId;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -49,24 +49,21 @@ public class InitializrWebConfig implements WebMvcConfigurer {
 
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-		configurer
-				.defaultContentTypeStrategy(new CommandLineContentNegotiationStrategy());
+		configurer.defaultContentTypeStrategy(new CommandLineContentNegotiationStrategy());
 	}
 
 	/**
 	 * A command-line aware {@link ContentNegotiationStrategy} that forces the media type
 	 * to "text/plain" for compatible agents.
 	 */
-	private static class CommandLineContentNegotiationStrategy
-			implements ContentNegotiationStrategy {
+	private static class CommandLineContentNegotiationStrategy implements ContentNegotiationStrategy {
 
 		private final UrlPathHelper urlPathHelper = new UrlPathHelper();
 
 		@Override
-		public List<MediaType> resolveMediaTypes(NativeWebRequest request)
-				throws HttpMediaTypeNotAcceptableException {
-			String path = this.urlPathHelper.getPathWithinApplication(
-					request.getNativeRequest(HttpServletRequest.class));
+		public List<MediaType> resolveMediaTypes(NativeWebRequest request) throws HttpMediaTypeNotAcceptableException {
+			String path = this.urlPathHelper
+					.getPathWithinApplication(request.getNativeRequest(HttpServletRequest.class));
 			if (!StringUtils.hasText(path) || !path.equals("/")) { // Only care about "/"
 				return MEDIA_TYPE_ALL_LIST;
 			}
@@ -74,8 +71,7 @@ public class InitializrWebConfig implements WebMvcConfigurer {
 			if (userAgent != null) {
 				Agent agent = Agent.fromUserAgent(userAgent);
 				if (agent != null) {
-					if (AgentId.CURL.equals(agent.getId())
-							|| AgentId.HTTPIE.equals(agent.getId())) {
+					if (AgentId.CURL.equals(agent.getId()) || AgentId.HTTPIE.equals(agent.getId())) {
 						return Collections.singletonList(MediaType.TEXT_PLAIN);
 					}
 				}

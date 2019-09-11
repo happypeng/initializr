@@ -1,11 +1,11 @@
 /*
- * Copyright 2012-2018 the original author or authors.
+ * Copyright 2012-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,7 +19,7 @@ package io.spring.initializr.actuate.autoconfigure;
 import io.spring.initializr.actuate.info.BomRangesInfoContributor;
 import io.spring.initializr.actuate.info.DependencyRangesInfoContributor;
 import io.spring.initializr.web.autoconfigure.InitializrAutoConfiguration;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import org.springframework.boot.autoconfigure.AutoConfigurations;
 import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
@@ -33,24 +33,20 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Madhura Bhave
  */
-public class InitializrActuatorEndpointsAutoConfigurationTests {
+class InitializrActuatorEndpointsAutoConfigurationTests {
 
 	private ApplicationContextRunner contextRunner = new ApplicationContextRunner()
-			.withConfiguration(AutoConfigurations.of(JacksonAutoConfiguration.class,
-					InitializrAutoConfiguration.class,
-					RestTemplateAutoConfiguration.class,
-					InitializrActuatorEndpointsAutoConfiguration.class));
+			.withConfiguration(AutoConfigurations.of(JacksonAutoConfiguration.class, InitializrAutoConfiguration.class,
+					RestTemplateAutoConfiguration.class, InitializrActuatorEndpointsAutoConfiguration.class));
 
 	@Test
-	public void autoConfigRegistersBomRangesInfoContributor() {
-		this.contextRunner.run((context) -> assertThat(context)
-				.hasSingleBean(BomRangesInfoContributor.class));
+	void autoConfigRegistersBomRangesInfoContributor() {
+		this.contextRunner.run((context) -> assertThat(context).hasSingleBean(BomRangesInfoContributor.class));
 	}
 
 	@Test
-	public void autoConfigRegistersDependencyRangesInfoContributor() {
-		this.contextRunner.run((context) -> assertThat(context)
-				.hasSingleBean(DependencyRangesInfoContributor.class));
+	void autoConfigRegistersDependencyRangesInfoContributor() {
+		this.contextRunner.run((context) -> assertThat(context).hasSingleBean(DependencyRangesInfoContributor.class));
 	}
 
 }

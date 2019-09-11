@@ -1,11 +1,11 @@
 /*
- * Copyright 2012-2018 the original author or authors.
+ * Copyright 2012-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -29,8 +29,8 @@ import org.springframework.hateoas.UriTemplate;
 /**
  * A {@link InitializrMetadataJsonMapper} handling the metadata format for v2.1
  * <p>
- * Version 2.1 brings the "versionRange" attribute for a dependency to restrict the Spring
- * Boot versions that can be used against it. That version also adds an additional
+ * Version 2.1 brings the "compatibilityRange" attribute for a dependency to restrict the
+ * Spring Boot versions that can be used against it. That version also adds an additional
  * `dependencies` endpoint.
  *
  * @author Stephane Nicoll
@@ -40,8 +40,8 @@ public class InitializrMetadataV21JsonMapper extends InitializrMetadataV2JsonMap
 	private final TemplateVariables dependenciesVariables;
 
 	public InitializrMetadataV21JsonMapper() {
-		this.dependenciesVariables = new TemplateVariables(new TemplateVariable(
-				"bootVersion", TemplateVariable.VariableType.REQUEST_PARAM));
+		this.dependenciesVariables = new TemplateVariables(
+				new TemplateVariable("bootVersion", TemplateVariable.VariableType.REQUEST_PARAM));
 	}
 
 	@Override
@@ -55,8 +55,8 @@ public class InitializrMetadataV21JsonMapper extends InitializrMetadataV2JsonMap
 	@Override
 	protected ObjectNode mapDependency(Dependency dependency) {
 		ObjectNode content = mapValue(dependency);
-		if (dependency.getVersionRange() != null) {
-			content.put("versionRange", dependency.getVersionRange());
+		if (dependency.getCompatibilityRange() != null) {
+			content.put("versionRange", dependency.getCompatibilityRange());
 		}
 		if (dependency.getLinks() != null && !dependency.getLinks().isEmpty()) {
 			content.set("_links", LinkMapper.mapLinks(dependency.getLinks()));
@@ -65,7 +65,7 @@ public class InitializrMetadataV21JsonMapper extends InitializrMetadataV2JsonMap
 	}
 
 	private ObjectNode dependenciesLink(String appUrl) {
-		String uri = (appUrl != null ? appUrl + "/dependencies" : "/dependencies");
+		String uri = (appUrl != null) ? appUrl + "/dependencies" : "/dependencies";
 		UriTemplate uriTemplate = new UriTemplate(uri, this.dependenciesVariables);
 		ObjectNode result = nodeFactory().objectNode();
 		result.put("href", uriTemplate.toString());

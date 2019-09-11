@@ -1,11 +1,11 @@
 /*
- * Copyright 2012-2017 the original author or authors.
+ * Copyright 2012-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,8 +28,6 @@ import org.springframework.core.env.MapPropertySource;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
 import org.springframework.util.StringUtils;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * Post-process the environment to extract the service credentials provided by
@@ -37,30 +35,19 @@ import org.springframework.web.util.UriComponentsBuilder;
  *
  * @author Stephane Nicoll
  */
-public class CloudfoundryEnvironmentPostProcessor
-		implements EnvironmentPostProcessor, Ordered {
+public class CloudfoundryEnvironmentPostProcessor implements EnvironmentPostProcessor, Ordered {
 
 	private static final String PROPERTY_SOURCE_NAME = "defaultProperties";
 
 	private static final int ORDER = ConfigFileApplicationListener.DEFAULT_ORDER + 1;
 
 	@Override
-	public void postProcessEnvironment(ConfigurableEnvironment environment,
-			SpringApplication springApplication) {
+	public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication springApplication) {
 
 		Map<String, Object> map = new LinkedHashMap<>();
 		String uri = environment.getProperty("vcap.services.stats-index.credentials.uri");
 		if (StringUtils.hasText(uri)) {
-			UriComponents uriComponents = UriComponentsBuilder.fromUriString(uri).build();
-			String userInfo = uriComponents.getUserInfo();
-			if (StringUtils.hasText(userInfo)) {
-				String[] credentials = userInfo.split(":");
-				map.put("initializr.stats.elastic.username", credentials[0]);
-				map.put("initializr.stats.elastic.password", credentials[1]);
-			}
-			map.put("initializr.stats.elastic.uri", UriComponentsBuilder
-					.fromUriString(uri).userInfo(null).build().toString());
-
+			map.put("initializr.stats.elastic.uri", uri);
 			addOrReplace(environment.getPropertySources(), map);
 		}
 	}
@@ -70,8 +57,7 @@ public class CloudfoundryEnvironmentPostProcessor
 		return ORDER;
 	}
 
-	private static void addOrReplace(MutablePropertySources propertySources,
-			Map<String, Object> map) {
+	private static void addOrReplace(MutablePropertySources propertySources, Map<String, Object> map) {
 		MapPropertySource target = null;
 		if (propertySources.contains(PROPERTY_SOURCE_NAME)) {
 			PropertySource<?> source = propertySources.get(PROPERTY_SOURCE_NAME);
